@@ -1,0 +1,105 @@
+{% extends "rental_app/home.html" %}
+{% block content %}
+<style>
+  .vehicle-grid {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .vehicle-card {
+    flex: 0 0 23%;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+    color: #fff;
+  }
+
+  .vehicle-card:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .vehicle-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+
+  .vehicle-info h3 {
+    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+  }
+
+  .vehicle-info p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+  }
+
+  .rent-btn {
+    background-color: #162b9e;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 0.8rem;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .rent-btn:hover {
+    background-color: #0d1a5f;
+  }
+
+  @media (max-width: 1024px) {
+    .vehicle-card {
+      flex: 0 0 31%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .vehicle-card {
+      flex: 0 0 45%;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .vehicle-card {
+      flex: 0 0 90%;
+    }
+  }
+</style>
+
+<div class="collection">
+  <h1>{% if vehicle_type %}{{ vehicle_type|title }}{% else %}All{% endif %} Vehicles</h1>
+
+  <div class="vehicle-grid">
+    {% for vehicle in vehicles %}
+    <div class="vehicle-card">
+      {% if vehicle.image %}
+        <img src="{{ vehicle.image.url }}" alt="{{ vehicle.name }}">
+      {% else %}
+        <img src="/static/default_vehicle.jpg" alt="No Image Available">
+      {% endif %}
+      <div class="vehicle-info">
+        <h3>{{ vehicle.name }}</h3>
+        <p>Type: {{ vehicle.vehicle_type|title }}</p>
+        <p>Price: Rs {{ vehicle.daily_rate }}/day</p>
+        <a href="{% url 'checkout' %}?vehicle_id={{ vehicle.id }}" class="rent-btn">Rent Now</a>
+      </div>
+    </div>
+    {% empty %}
+      <p>No vehicles available.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

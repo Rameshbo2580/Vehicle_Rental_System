@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Available Vehicles</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
+      color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .wrapper {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .vehicle-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: flex-start;
+    }
+
+    .vehicle-card {
+      flex: 0 0 24%;
+      box-sizing: border-box;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vehicle-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .vehicle-card h2 {
+      margin-top: 0;
+      color: #ffdc73;
+    }
+
+    .vehicle-card p {
+      margin: 0.5rem 0 1rem;
+      line-height: 1.4;
+    }
+
+    .rent-btn {
+      display: inline-block;
+      background-color: #162b9e;
+      color: white;
+      padding: 0.6rem 1rem;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .rent-btn:hover {
+      background-color: #0d1a5f;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .vehicle-card {
+        flex: 0 0 32%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vehicle-card {
+        flex: 0 0 48%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vehicle-card {
+        flex: 0 0 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Available Vehicles</h1>
+  <div class="wrapper">
+    <div class="vehicle-grid">
+      {% for vehicle in vehicles %}
+      <div class="vehicle-card">
+        <h2>{{ vehicle.name }}</h2>
+        <p><strong>Type:</strong> {{ vehicle.vehicle_type }}</p>
+        <p><strong>Description:</strong> {{ vehicle.description }}</p>
+        <p><strong>Price/day:</strong> ${{ vehicle.price_per_day }}</p>
+        <a class="rent-btn" href="{% url 'rent-vehicle' vehicle.id %}">Rent Now</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

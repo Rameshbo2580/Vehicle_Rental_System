@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Rental Confirmation</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ff9a00, #ff5e00, #ff2900);
+            color: #2a1e0f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .confirmation-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #162b9e;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #444;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-bottom: 2rem;
+            color: #2a1e0f;
+            font-size: 1rem;
+            text-align: left;
+        }
+        ul li {
+            margin-bottom: 0.7rem;
+            padding-left: 10px;
+            border-left: 4px solid #162b9e;
+        }
+        a {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #162b9e;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #0f1a6e;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container">
+        <h1>Thank you for renting {{ vehicle.name }}!</h1>
+        <p>Your rental details:</p>
+        <ul>
+            <li><strong>Start Date:</strong> {{ rental_data.start_date }}</li>
+            <li><strong>End Date:</strong> {{ rental_data.end_date }}</li>
+            <li><strong>Payment Method:</strong>
+                {% if rental_data.payment_method == 'Card' %}
+                    Credit Card
+                {% elif rental_data.payment_method == 'Esewa' %}
+                    Esewa
+                {% elif rental_data.payment_method == 'Cash' %}
+                    Cash
+                {% else %}
+                    {{ rental_data.payment_method }}
+                {% endif %}
+            </li>
+            <li><strong>Total Price:</strong> Rs {{ rental_data.total_price|floatformat:2 }}</li>
+        </ul>
+        <a href="{% url 'home' %}">Back to Home</a>
+    </div>
+</body>
+</html>
